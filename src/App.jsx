@@ -11,6 +11,7 @@ function App() {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, checked, type } = e.target;
@@ -23,6 +24,10 @@ function App() {
     axios.post(apiUrl, formData).then((resp) => {
       if (resp.data.id) {
         setFormData(initialFormData);
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 5000);
       }
     });
   };
@@ -35,6 +40,7 @@ function App() {
             <div className="card">
               <div className="card-body">
                 <h3 className="text-center">New Post</h3>
+                {showAlert && <div className="alert alert-success">I dati sono stati inviati con successo</div>}
                 <form onSubmit={sendData}>
                   <div className="mb-2">
                     <label htmlFor="author" className="form-label">
